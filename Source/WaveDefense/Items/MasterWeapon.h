@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MasterItem.h"
+#include "WaveDefense/Structs/WeaponData.h"
 #include "MasterWeapon.generated.h"
 
 /**
@@ -17,4 +18,7 @@ public:
 	AMasterWeapon();
 
 	virtual void OnInteract(AMasterCharacter* Player) override;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category= "Weapon Data")
+	FWeaponData WeaponData;
 };

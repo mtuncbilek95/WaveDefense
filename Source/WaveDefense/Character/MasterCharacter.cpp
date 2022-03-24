@@ -40,7 +40,7 @@ void AMasterCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActo
                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                       const FHitResult& SweepResult)
 {
-	/*
+
 	if (IsValid(OtherActor))
 	{
 		IInteractionInterface* Interface = Cast<IInteractionInterface>(OtherActor);
@@ -50,17 +50,17 @@ void AMasterCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActo
 		}
 
 	}
-*/
+
 }
 
 void AMasterCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	// IInteractionInterface* Interface = Cast<IInteractionInterface>(OtherActor);
-	// if (Interface)
-	// {
-	// 	Interface->OnInteractExit();
-	// }
+	IInteractionInterface* Interface = Cast<IInteractionInterface>(OtherActor);
+	if (Interface)
+	{
+		Interface->OnInteractExit();
+	}
 }
 
 // Called when the game starts or when spawned
@@ -133,18 +133,18 @@ void AMasterCharacter::AimCameraSmoothening()
 
 void AMasterCharacter::Interact()
 {
-	// TArray<AActor*> Actors;
-	//
-	// GetCapsuleComponent()->GetOverlappingActors(Actors);
-	//
-	// for (const auto Actor : Actors)
-	// {
-	// 	IInteractionInterface* Interface = Cast<IInteractionInterface>(Actor);
-	// 	if(Interface)
-	// 	{
-	// 		Interface->OnInteract(this);
-	// 	}
-	// }
+	TArray<AActor*> Actors;
+	
+	GetCapsuleComponent()->GetOverlappingActors(Actors);
+	
+	for (const auto Actor : Actors)
+	{
+		IInteractionInterface* Interface = Cast<IInteractionInterface>(Actor);
+		if(Interface)
+		{
+			Interface->OnInteract(this);
+		}
+	}
 }
 
 

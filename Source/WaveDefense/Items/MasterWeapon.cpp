@@ -6,3 +6,8 @@
 AMasterWeapon::AMasterWeapon()
 {
 }
+
+void AMasterWeapon::OnInteract(AMasterCharacter* Player)
+{
+	Super::OnInteract(Player);
+}

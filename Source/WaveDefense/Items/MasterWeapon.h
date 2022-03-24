@@ -13,6 +13,8 @@ UCLASS()
 class WAVEDEFENSE_API AMasterWeapon : public AMasterItem
 {
 	GENERATED_BODY()
+public:
 	AMasterWeapon();
-	
+
+	virtual void OnInteract(AMasterCharacter* Player) override;
 };

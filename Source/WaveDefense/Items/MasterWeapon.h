@@ -19,6 +19,6 @@ public:
 
 	virtual void OnInteract(AMasterCharacter* Player) override;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category= "Weapon Data")
+	UPROPERTY(BlueprintReadOnly)
 	FWeaponData WeaponData;
 };

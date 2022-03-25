@@ -9,6 +9,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "WaveDefense/Interfaces/InteractionInterface.h"
+#include "WaveDefense/Items/MasterWeapon.h"
 //#include "WaveDefense/Widget/InteractionWidget.h"
 
 // Sets default values
@@ -147,5 +148,20 @@ void AMasterCharacter::Interact()
 	}
 }
 
+void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
+{
+	switch (Weapon->WeaponData.HandedWeapon)
+	{
+	case EHWT_Pistol:
+		break;
+	case EHWT_Rifle:
+		if(!IsValid(HandedWeapon))
+		{
+			HandedWeapon = Weapon;
+		}
+		break;
+		default: break;
+	}
+}
 
 #pragma endregion

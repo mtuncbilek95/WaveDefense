@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MasterItem.h"
+#include "Components/SphereComponent.h"
 #include "WaveDefense/Structs/WeaponData.h"
 #include "MasterWeapon.generated.h"
 
@@ -17,7 +18,22 @@ class WAVEDEFENSE_API AMasterWeapon : public AMasterItem
 public:
 	AMasterWeapon();
 
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UStaticMeshComponent* WeaponBody;
+
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	USphereComponent* Collision;
+	
+protected:
+	
+	virtual void BeginPlay() override;
+	
+public:
+	
 	virtual void OnInteract(AMasterCharacter* Player) override;
+
+	UFUNCTION()
+	void SetWeaponState(E_WeaponState WeaponState);
 
 	UPROPERTY(BlueprintReadOnly)
 	FWeaponData WeaponData;

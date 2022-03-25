@@ -12,6 +12,8 @@
 #include "WaveDefense/Enums/E_LocomotionStatus.h"
 #include "MasterCharacter.generated.h"
 
+class AMasterWeapon;
+
 UCLASS()
 class WAVEDEFENSE_API AMasterCharacter : public ACharacter
 {
@@ -28,6 +30,9 @@ public:
 
 	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	AMasterWeapon* HandedWeapon;
 
 #pragma endregion
 
@@ -121,6 +126,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Interaction")
 	void Interact();
+
+	UFUNCTION()
+	void PickUpGun(AMasterWeapon* Weapon);
 	
 #pragma endregion 
 };

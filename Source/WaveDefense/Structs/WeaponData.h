@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "WaveDefense/Enums/E_HandedWeaponType.h"
+#include "WaveDefense/Enums/E_WeaponState.h"
 #include "WeaponData.generated.h"
 
 USTRUCT(BlueprintType)
@@ -16,5 +17,8 @@ struct FWeaponData
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="Data")
 	TEnumAsByte<E_HandedWeaponType> HandedWeapon;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="Data")
+	TEnumAsByte<E_WeaponState> WeaponState;
 	
 };

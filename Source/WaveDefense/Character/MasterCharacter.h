@@ -126,9 +126,14 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Interaction")
 	void Interact();
-
+	
+	UFUNCTION(BlueprintNativeEvent)
+	void UpdateAttachment();
+	
 	UFUNCTION()
 	void PickUpGun(AMasterWeapon* Weapon);
-	
+
+	UPROPERTY(Category=MovementData, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	FString DebuggerString;
 #pragma endregion 
 };

@@ -68,6 +68,7 @@ void AMasterCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor*
 void AMasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 // Called every frame
@@ -145,9 +146,16 @@ void AMasterCharacter::Interact()
 		{
 			Interface->OnInteract(this);
 		}
+		break;
 	}
 }
 
+void AMasterCharacter::UpdateAttachment_Implementation()
+{
+}
+
+
+// Decide where to put the weapon on the ground, according to their type and your equip status.
 void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 {
 	switch (Weapon->WeaponData.HandedWeapon)
@@ -158,6 +166,8 @@ void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 		if(!IsValid(HandedWeapon))
 		{
 			HandedWeapon = Weapon;
+			HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
+			UpdateAttachment();
 		}
 		break;
 		default: break;

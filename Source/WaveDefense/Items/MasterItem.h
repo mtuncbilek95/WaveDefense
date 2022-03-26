@@ -19,7 +19,7 @@ public:
 	AMasterItem();
 	
 	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	USceneComponent* DefaultRootComponent;
+	USceneComponent* DefaultSceneComponent;
 	
 	UPROPERTY(EditAnywhere, Category="UI")
 	TSubclassOf<UUserWidget> WidgetClass;

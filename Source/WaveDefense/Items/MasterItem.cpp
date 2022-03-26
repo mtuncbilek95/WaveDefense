@@ -9,9 +9,9 @@
 AMasterItem::AMasterItem()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
-	RootComponent = DefaultRootComponent;
+	PrimaryActorTick.bCanEverTick = false;
+	DefaultSceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
+	RootComponent = DefaultSceneComponent;
 }
 
 // Called when the game starts or when spawned

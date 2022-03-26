@@ -34,7 +34,7 @@ public:
 
 	UFUNCTION()
 	void SetWeaponState(E_WeaponState WeaponState);
-
-	UPROPERTY(BlueprintReadOnly)
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category= "Data")
 	FWeaponData WeaponData;
 };

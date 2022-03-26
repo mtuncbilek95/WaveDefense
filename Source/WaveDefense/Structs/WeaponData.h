@@ -12,13 +12,13 @@ struct FWeaponData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="Data")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Data")
 	FName GunName;
 
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="Data")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Data")
 	TEnumAsByte<E_HandedWeaponType> HandedWeapon;
 
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="Data")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Data")
 	TEnumAsByte<E_WeaponState> WeaponState;
 	
 };

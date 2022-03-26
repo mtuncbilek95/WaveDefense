@@ -144,7 +144,6 @@ void AMasterCharacter::Interact()
 		if(Interface)
 		{
 			Interface->OnInteract(this);
-			DebuggerString = "a";
 		}
 		break;
 	}

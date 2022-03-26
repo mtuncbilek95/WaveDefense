@@ -68,7 +68,6 @@ void AMasterCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor*
 void AMasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -167,7 +166,11 @@ void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 		{
 			HandedWeapon = Weapon;
 			HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
-			UpdateAttachment();
+			if(HandedWeapon->WeaponData.WeaponState == EWS_Equipped && !HandedWeapon->WeaponBody->IsSimulatingPhysics())
+			{
+				UpdateAttachment();
+			}
+	
 		}
 		break;
 		default: break;

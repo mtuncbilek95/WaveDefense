@@ -8,7 +8,7 @@ AMasterWeapon::AMasterWeapon()
 	PrimaryActorTick.bCanEverTick = false;
 	WeaponBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon Body"));
 	WeaponBody->SetupAttachment(GetRootComponent());
-
+	
 	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	Collision->SetupAttachment(WeaponBody);
 	
@@ -23,11 +23,15 @@ void AMasterWeapon::BeginPlay()
 void AMasterWeapon::OnInteract(AMasterCharacter* Player)
 {
 	Super::OnInteract(Player);
-	Player->PickUpGun(this);
 	SetWeaponState(EWS_Equipped);
+	
+	if(!WeaponBody->IsSimulatingPhysics())
+	{
+		Player->PickUpGun(this);
+	}
 }
 
-void AMasterWeapon::SetWeaponState(E_WeaponState WeaponState)
+void AMasterWeapon::SetWeaponState(const E_WeaponState WeaponState)
 {
 	WeaponData.WeaponState = WeaponState;
 

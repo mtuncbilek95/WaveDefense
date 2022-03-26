@@ -31,7 +31,7 @@ public:
 	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
 
-	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 	AMasterWeapon* HandedWeapon;
 
 #pragma endregion

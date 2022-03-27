@@ -276,4 +276,39 @@ void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 	}
 }
 
+//Set Aim State according to Locomotion Status
+void AMasterCharacter::SetAim(const bool bChecker)
+{
+	if(LocomotionStatus != ELS_Sprint)
+	{
+		switch (BaseStatus)
+		{
+		case EBS_HaveWeapon:
+			bChecker? AimStatus = EAS_Aiming : AimStatus = EAS_Freelook; 
+			GetCharacterMovement()->bOrientRotationToMovement = !bChecker;
+			bUseControllerRotationYaw = bChecker;
+			SpringArm->bEnableCameraLag = !bChecker;
+			SpringArm->bEnableCameraRotationLag =!bChecker;
+			break;
+		case EBS_NoWeapon:
+			AimStatus = EAS_Freelook;
+		default: break;
+		}
+	}
+}
+
+//Set Sprint State according to Aim Status
+void AMasterCharacter::SetSprint(bool bChecker)
+{
+	switch (AimStatus)
+	{
+	case EAS_Aiming:
+		break;
+	case EAS_Freelook:
+		bChecker? GetCharacterMovement()->MaxWalkSpeed = 500: GetCharacterMovement()->MaxWalkSpeed = 350;
+		break;
+	default: break;
+	}
+}
+
 #pragma endregion

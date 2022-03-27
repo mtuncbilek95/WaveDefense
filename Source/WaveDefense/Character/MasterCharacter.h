@@ -138,5 +138,15 @@ public:
 	UFUNCTION()
 	void PickUpGun(AMasterWeapon* Weapon);
 	
+#pragma endregion
+	
+#pragma region "Aim/Sprint Set"
+
+	UFUNCTION(BlueprintCallable)
+	void SetAim(bool bChecker);
+
+	UFUNCTION(BlueprintCallable)
+	void SetSprint(bool bChecker);
+	
 #pragma endregion 
 };

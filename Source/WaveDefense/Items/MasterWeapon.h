@@ -37,4 +37,7 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category= "Data")
 	FWeaponData WeaponData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Data")
+	FTransform HandTransform;
 };

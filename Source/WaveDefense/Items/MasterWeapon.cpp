@@ -41,6 +41,7 @@ void AMasterWeapon::SetWeaponState(const E_WeaponState WeaponState)
 		WeaponBody->SetSimulatePhysics(false);
 		WeaponBody->SetCollisionProfileName(FName("NoCollision"));
 		WeaponBody->ResetRelativeTransform();
+		WeaponBody->SetRelativeTransform(HandTransform);
 		break;
 
 	case EWS_Dropped:

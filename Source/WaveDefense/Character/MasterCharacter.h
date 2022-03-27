@@ -46,16 +46,16 @@ public:
 	
 #pragma region "State Enums"
 
-	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_LocomotionStatus> LocomotionStatus;
 
-	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_BaseStatus> BaseStatus;
 
-	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_AimStatus> AimStatus;
 
-	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_HandedWeaponType> HandedWeaponType;
 
 #pragma endregion
@@ -133,7 +133,7 @@ public:
 	void Interact();
 	
 	UFUNCTION()
-	void UpdateAttachment() const;
+	void UpdateAttachment();
 	
 	UFUNCTION()
 	void PickUpGun(AMasterWeapon* Weapon);

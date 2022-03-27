@@ -67,6 +67,10 @@ void AMasterCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor*
 void AMasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	AimStatus = EAS_Freelook;
+	LocomotionStatus = ELS_Idle;
+	BaseStatus = EBS_NoWeapon;
+	HandedWeaponType = EHWT_None;
 }
 
 // Called every frame
@@ -120,7 +124,7 @@ void AMasterCharacter::AimCameraSmoothening()
 		FollowCamera->FieldOfView = UKismetMathLibrary::FInterpTo(FollowCamera->FieldOfView,
 		                                                          70, GetWorld()->DeltaTimeSeconds, 10);
 		SpringArm->TargetArmLength = UKismetMathLibrary::FInterpTo(SpringArm->TargetArmLength,
-		                                                           150, GetWorld()->DeltaTimeSeconds, 10);
+		                                                           200, GetWorld()->DeltaTimeSeconds, 10);
 	}
 
 	else if (AimStatus == EAS_Freelook)
@@ -128,9 +132,7 @@ void AMasterCharacter::AimCameraSmoothening()
 		FollowCamera->FieldOfView = UKismetMathLibrary::FInterpTo(FollowCamera->FieldOfView,
 		                                                          90, GetWorld()->DeltaTimeSeconds, 10);
 		SpringArm->TargetArmLength = UKismetMathLibrary::FInterpTo(SpringArm->TargetArmLength,
-		                                                           150, GetWorld()->DeltaTimeSeconds, 10);
-		SpringArm->SocketOffset.Y = UKismetMathLibrary::FInterpTo(SpringArm->SocketOffset.Y,
-		                                                          75, GetWorld()->DeltaTimeSeconds, 10);
+		                                                           250, GetWorld()->DeltaTimeSeconds, 10);
 	}
 }
 
@@ -153,11 +155,12 @@ void AMasterCharacter::Interact()
 }
 
 //Attach the weapons according to their position.
-void AMasterCharacter::UpdateAttachment() const
+void AMasterCharacter::UpdateAttachment()
 {
 	if(IsValid(HandedWeapon))
 	{
 		HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("ik_hand_gun"));
+		BaseStatus = EBS_HaveWeapon;
 	}
 	if(IsValid(PrimaryWeapon))
 	{

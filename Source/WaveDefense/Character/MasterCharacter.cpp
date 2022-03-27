@@ -179,7 +179,7 @@ void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 		{
 			switch (HandedWeaponType) 
 			{
-			case EHWT_Rifle: //If holding rifle change the rifle.
+			case EHWT_Rifle: //If holding rifle, change the rifle.
 				HandedWeapon->SetWeaponState(EWS_Dropped);
 				HandedWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 				HandedWeapon = Weapon;
@@ -223,6 +223,49 @@ void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 		break;
 		
 	case EHWT_Pistol: //Weapon on ground is pistol
+		if(IsValid(HandedWeapon)) //If holding a weapon, check the type of it.
+		{
+			switch (HandedWeapon->WeaponData.HandedWeapon)
+			{
+			case EHWT_Rifle: //If holding a rifle, check the pistol socket
+				if(IsValid(SecondaryWeapon)) //If there is a pistol, change it.
+				{
+					SecondaryWeapon->SetWeaponState(EWS_Dropped);
+					SecondaryWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+					SecondaryWeapon = Weapon;
+					UpdateAttachment();
+				}
+				else //If there is not a pistol, attach it.
+				{
+					SecondaryWeapon = Weapon;
+					UpdateAttachment();
+				}
+				break;
+			case EHWT_Pistol: //If holding pistol, change the pistol.
+				HandedWeapon->SetWeaponState(EWS_Dropped);
+				HandedWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+				HandedWeapon = Weapon;
+				UpdateAttachment();
+				break;
+			default: break;
+			}
+		}
+		else //If holding nothing, check the pistol socket.
+		{
+			if(IsValid(SecondaryWeapon)) //If have a pistol in pocket, change it.
+			{
+				SecondaryWeapon->SetWeaponState(EWS_Dropped);
+				SecondaryWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+				SecondaryWeapon = Weapon;
+				UpdateAttachment();
+			}
+			else //If not have pistol in pocket, hold the pistol.
+			{
+				HandedWeapon = Weapon;
+				HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
+				UpdateAttachment();
+			}
+		}
 		break;
 		
 	default: break;

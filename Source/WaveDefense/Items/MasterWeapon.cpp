@@ -38,16 +38,15 @@ void AMasterWeapon::SetWeaponState(const E_WeaponState WeaponState)
 	case EWS_Equipped:
 		WeaponBody->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		Collision->SetCollisionProfileName(FName("NoCollision"));
-		WeaponBody->SetCollisionProfileName(FName("NoCollision"));
 		WeaponBody->SetSimulatePhysics(false);
+		WeaponBody->SetCollisionProfileName(FName("NoCollision"));
 		WeaponBody->ResetRelativeTransform();
 		break;
 
 	case EWS_Dropped:
 		Collision->SetCollisionProfileName(FName("OverlapAllDynamic"));
-		WeaponBody->SetCollisionProfileName(FName("WeaponActor"));
 		WeaponBody->SetSimulatePhysics(true);
-
+		WeaponBody->SetCollisionProfileName(FName("WeaponActor"));
 		break;
 
 	default: break;

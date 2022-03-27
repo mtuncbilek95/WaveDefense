@@ -155,9 +155,18 @@ void AMasterCharacter::Interact()
 //Attach the weapons according to their position.
 void AMasterCharacter::UpdateAttachment() const
 {
-	HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("ik_hand_gun"));
-	PrimaryWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("back_socket"));
-	SecondaryWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("pocket_socket"));
+	if(IsValid(HandedWeapon))
+	{
+		HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("ik_hand_gun"));
+	}
+	if(IsValid(PrimaryWeapon))
+	{
+		PrimaryWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("back_socket"));
+	}
+	if(IsValid(SecondaryWeapon))
+	{
+		SecondaryWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("pocket_socket"));
+	}
 }
 
 // Decide where to put the weapon on the ground, according to their type and your equip status.

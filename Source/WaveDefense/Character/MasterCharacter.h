@@ -46,13 +46,13 @@ public:
 	
 #pragma region "State Enums"
 
-	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_LocomotionStatus> LocomotionStatus;
 
-	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_BaseStatus> BaseStatus;
 
-	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<E_AimStatus> AimStatus;
 
 	UPROPERTY(Category=CharacterData, EditAnywhere, BlueprintReadWrite)

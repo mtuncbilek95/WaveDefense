@@ -10,7 +10,6 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "WaveDefense/Interfaces/InteractionInterface.h"
 #include "WaveDefense/Items/MasterWeapon.h"
-//#include "WaveDefense/Widget/InteractionWidget.h"
 
 // Sets default values
 AMasterCharacter::AMasterCharacter()
@@ -86,6 +85,7 @@ void AMasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 #pragma region "Camera Controller"
 
+//World rotation for "Add Movement Input"
 void AMasterCharacter::ControllerRotation(FVector& ForwardVector, FVector& RightVector) const
 {
 	const float RotatorYaw = GetControlRotation().Yaw;
@@ -95,6 +95,7 @@ void AMasterCharacter::ControllerRotation(FVector& ForwardVector, FVector& Right
 	RightVector = UKismetMathLibrary::GetRightVector(ControllerRotator);
 }
 
+//Change the direction according to movement input
 void AMasterCharacter::CalculateDirectionRotation()
 {
 	const FRotator CameraRotator = UKismetMathLibrary::NormalizedDeltaRotator(
@@ -111,6 +112,7 @@ void AMasterCharacter::CalculateDirectionRotation()
 	DirectionYaw = UKismetMathLibrary::Round(DirectionYaw);
 }
 
+//Smooth transition between aiming and freelook.
 void AMasterCharacter::AimCameraSmoothening()
 {
 	if (AimStatus == EAS_Aiming)
@@ -118,7 +120,7 @@ void AMasterCharacter::AimCameraSmoothening()
 		FollowCamera->FieldOfView = UKismetMathLibrary::FInterpTo(FollowCamera->FieldOfView,
 		                                                          70, GetWorld()->DeltaTimeSeconds, 10);
 		SpringArm->TargetArmLength = UKismetMathLibrary::FInterpTo(SpringArm->TargetArmLength,
-		                                                           180, GetWorld()->DeltaTimeSeconds, 10);
+		                                                           150, GetWorld()->DeltaTimeSeconds, 10);
 	}
 
 	else if (AimStatus == EAS_Freelook)
@@ -132,6 +134,7 @@ void AMasterCharacter::AimCameraSmoothening()
 	}
 }
 
+//Check all the overlapping actors, if the overlapping actors have Interaction Interface, call the OnInteract.
 void AMasterCharacter::Interact()
 {
 	TArray<AActor*> Actors;
@@ -149,31 +152,72 @@ void AMasterCharacter::Interact()
 	}
 }
 
-void AMasterCharacter::UpdateAttachment_Implementation()
+//Attach the weapons according to their position.
+void AMasterCharacter::UpdateAttachment() const
 {
+	HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("ik_hand_gun"));
+	PrimaryWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("back_socket"));
+	SecondaryWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("pocket_socket"));
 }
-
 
 // Decide where to put the weapon on the ground, according to their type and your equip status.
 void AMasterCharacter::PickUpGun(AMasterWeapon* Weapon)
 {
 	switch (Weapon->WeaponData.HandedWeapon)
 	{
-	case EHWT_Pistol:
-		break;
-	case EHWT_Rifle:
-		if(!IsValid(HandedWeapon))
+	case EHWT_Rifle: //Weapon on ground is rifle
+		if(IsValid(HandedWeapon)) //Check hand first to see if there is a weapon in hand.
 		{
-			HandedWeapon = Weapon;
-			HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
-			if(HandedWeapon->WeaponData.WeaponState == EWS_Equipped && !HandedWeapon->WeaponBody->IsSimulatingPhysics())
+			switch (HandedWeaponType) 
 			{
+			case EHWT_Rifle: //If holding rifle change the rifle.
+				HandedWeapon->SetWeaponState(EWS_Dropped);
+				HandedWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+				HandedWeapon = Weapon;
+				UpdateAttachment();
+				break;
+				
+			case EHWT_Pistol: //If holding pistol, check the rifle socket in back.
+				if(IsValid(PrimaryWeapon)) //If there is a rifle in back, apply these below.
+				{
+					PrimaryWeapon->SetWeaponState(EWS_Dropped);
+					PrimaryWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+					PrimaryWeapon = Weapon;
+					UpdateAttachment();
+				}
+				else
+				{
+					PrimaryWeapon = Weapon;
+					UpdateAttachment();
+				}
+				break;
+				
+			default: break;
+			} 
+		}
+		else //If not holding a weapon, check the primary weapon.
+		{
+			if(IsValid(PrimaryWeapon)) //If there is a rifle in primary, change them.
+			{
+				PrimaryWeapon->SetWeaponState(EWS_Dropped);
+				PrimaryWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+				PrimaryWeapon = Weapon;
 				UpdateAttachment();
 			}
-	
+			else //If there is no weapon in primary, hold the weapon.
+			{
+				HandedWeapon = Weapon;
+				HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
+				UpdateAttachment();
+			}
 		}
 		break;
-		default: break;
+		
+	case EHWT_Pistol: //Weapon on ground is pistol
+		break;
+		
+	default: break;
+		
 	}
 }
 

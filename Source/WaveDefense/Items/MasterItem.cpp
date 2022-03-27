@@ -30,6 +30,7 @@ void AMasterItem::OnInteract(AMasterCharacter* Player)
 {
 }
 
+//If player overlaps the actor who has this interface, a "Pick Up" widget will pop on on the product.
 void AMasterItem::OnInteractEnter(AMasterCharacter* Player)
 {
 	
@@ -51,6 +52,7 @@ void AMasterItem::OnInteractEnter(AMasterCharacter* Player)
 	
 }
 
+//If player stops overlapping the actor who has this interface, the widget will be destroyed.
 void AMasterItem::OnInteractExit()
 {
 	if(IsValid(InteractionComponent))
@@ -61,7 +63,7 @@ void AMasterItem::OnInteractExit()
 	}
 }
 
-FText AMasterItem::GetText(FString text)
+FText AMasterItem::GetText(FString Text)
 {
-	return UKismetTextLibrary::Conv_StringToText(text);
+	return UKismetTextLibrary::Conv_StringToText(Text);
 }

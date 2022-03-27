@@ -30,12 +30,20 @@ public:
 
 	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-
-	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-	AMasterWeapon* HandedWeapon;
-
+	
 #pragma endregion
 
+#pragma region "Weapon Actors"
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	AMasterWeapon* HandedWeapon;
+	
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	AMasterWeapon* PrimaryWeapon;
+	
+	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	AMasterWeapon* SecondaryWeapon;
+#pragma endregion
+	
 #pragma region "State Enums"
 
 	UPROPERTY(Category=CharacterData, VisibleAnywhere, BlueprintReadWrite)
@@ -71,9 +79,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	bool debugger;
 	
 #pragma region "Direction and Rotation Variables"
 
@@ -127,13 +132,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Interaction")
 	void Interact();
 	
-	UFUNCTION(BlueprintNativeEvent)
-	void UpdateAttachment();
+	UFUNCTION()
+	void UpdateAttachment() const;
 	
 	UFUNCTION()
 	void PickUpGun(AMasterWeapon* Weapon);
-
-	UPROPERTY(Category=MovementData, VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-	FString DebuggerString;
+	
 #pragma endregion 
 };

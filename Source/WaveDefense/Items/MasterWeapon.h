@@ -19,7 +19,7 @@ public:
 	AMasterWeapon();
 
 	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	UStaticMeshComponent* WeaponBody;
+	USkeletalMeshComponent* WeaponBody;
 
 	UPROPERTY(Category=Components, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	USphereComponent* Collision;

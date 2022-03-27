@@ -45,5 +45,5 @@ public:
 	virtual void OnInteractExit() override;
 
 	UFUNCTION(BlueprintPure)
-	static FText GetText(FString text);
+	static FText GetText(FString Text);
 };

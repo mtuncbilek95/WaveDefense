@@ -36,7 +36,6 @@ void AMasterWeapon::SetWeaponState(const E_WeaponState WeaponState)
 	switch (WeaponData.WeaponState)
 	{
 	case EWS_Equipped:
-		WeaponBody->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		Collision->SetCollisionProfileName(FName("NoCollision"));
 		WeaponBody->SetSimulatePhysics(false);
 		WeaponBody->SetCollisionProfileName(FName("NoCollision"));

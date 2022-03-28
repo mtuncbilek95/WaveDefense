@@ -159,8 +159,19 @@ void AMasterCharacter::UpdateAttachment()
 {
 	if(IsValid(HandedWeapon))
 	{
-		HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("ik_hand_gun"));
-		BaseStatus = EBS_HaveWeapon;
+		switch (HandedWeaponType)
+		{
+		case EHWT_Rifle:
+			HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("ik_hand_gun"));
+			BaseStatus = EBS_HaveWeapon;
+			break;
+		case EHWT_Pistol:
+			HandedWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("pistol_hand"));
+			BaseStatus = EBS_HaveWeapon;
+			break;
+		default: break;
+		}
+		
 	}
 	if(IsValid(PrimaryWeapon))
 	{

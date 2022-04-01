@@ -122,17 +122,20 @@ void AMasterCharacter::AimCameraSmoothening()
 	if (AimStatus == EAS_Aiming)
 	{
 		FollowCamera->FieldOfView = UKismetMathLibrary::FInterpTo(FollowCamera->FieldOfView,
-		                                                          70, GetWorld()->DeltaTimeSeconds, 10);
+			70, GetWorld()->DeltaTimeSeconds, 10);
 		SpringArm->TargetArmLength = UKismetMathLibrary::FInterpTo(SpringArm->TargetArmLength,
-		                                                           200, GetWorld()->DeltaTimeSeconds, 10);
+			AimArmLength, GetWorld()->DeltaTimeSeconds, CameraInterpSpeed);
+		SpringArm->SocketOffset = FVector(0,75,30);
 	}
 
 	else if (AimStatus == EAS_Freelook)
 	{
 		FollowCamera->FieldOfView = UKismetMathLibrary::FInterpTo(FollowCamera->FieldOfView,
-		                                                          90, GetWorld()->DeltaTimeSeconds, 10);
+			90, GetWorld()->DeltaTimeSeconds, 10);
 		SpringArm->TargetArmLength = UKismetMathLibrary::FInterpTo(SpringArm->TargetArmLength,
-		                                                           250, GetWorld()->DeltaTimeSeconds, 10);
+			FreeLookArmLength, GetWorld()->DeltaTimeSeconds, CameraInterpSpeed);
+		SpringArm->SocketOffset.Z = UKismetMathLibrary::FInterpTo(SpringArm->SocketOffset.Z,
+			FreeOffset, GetWorld()->DeltaTimeSeconds, CameraInterpSpeed);
 	}
 }
 
@@ -320,6 +323,43 @@ void AMasterCharacter::SetSprint(bool bChecker)
 		break;
 	default: break;
 	}
+	
 }
+
+void AMasterCharacter::SwapWeapon()
+{
+	if(AimStatus == EAS_Freelook)
+	{
+		if(IsValid(HandedWeapon))
+		{
+			switch (HandedWeaponType)
+			{
+			case EHWT_Rifle:
+				PrimaryWeapon = HandedWeapon;
+				HandedWeapon = SecondaryWeapon;
+				SecondaryWeapon = nullptr;
+				HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
+				UpdateAttachment();
+				HandedWeapon->SetWeaponState(EWS_Equipped);
+				break;
+			case EHWT_Pistol:
+				SecondaryWeapon = HandedWeapon;
+				HandedWeapon = PrimaryWeapon;
+				PrimaryWeapon = nullptr;
+				HandedWeaponType = HandedWeapon->WeaponData.HandedWeapon;
+				UpdateAttachment();
+				HandedWeapon->SetWeaponState(EWS_Equipped);
+				default: break;
+			}
+			
+			
+		}
+		else
+		{
+			
+		}
+	}
+}
+
 
 #pragma endregion

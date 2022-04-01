@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "MasterItem.h"
 #include "Components/SphereComponent.h"
+#include "WaveDefense/Interfaces/WeaponSystem.h"
 #include "WaveDefense/Structs/WeaponData.h"
 #include "MasterWeapon.generated.h"
 
@@ -12,7 +13,7 @@
  * 
  */
 UCLASS()
-class WAVEDEFENSE_API AMasterWeapon : public AMasterItem
+class WAVEDEFENSE_API AMasterWeapon : public AMasterItem, public IWeaponSystem
 {
 	GENERATED_BODY()
 public:
@@ -40,4 +41,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Data")
 	FTransform HandTransform;
+
+	virtual void FireWeapon_Implementation(UCameraComponent* PlayerCamera) override;
 };

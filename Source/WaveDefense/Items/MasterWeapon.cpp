@@ -52,3 +52,9 @@ void AMasterWeapon::SetWeaponState(const E_WeaponState WeaponState)
 	default: break;
 	}
 }
+
+void AMasterWeapon::FireWeapon_Implementation(UCameraComponent* PlayerCamera)
+{
+	IWeaponSystem::FireWeapon_Implementation(PlayerCamera);
+}
+

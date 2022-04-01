@@ -132,7 +132,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Interaction")
 	void Interact();
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category="Interaction")
 	void UpdateAttachment();
 	
 	UFUNCTION()
@@ -147,6 +147,29 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetSprint(bool bChecker);
-	
+
+	UFUNCTION(BlueprintCallable)
+	void SwapWeapon();
+
 #pragma endregion 
+
+#pragma region "Camera Properties"
+
+	UPROPERTY(Category="Camera", VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	float FreeLookArmLength;
+
+	UPROPERTY(Category="Camera", VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	float AimArmLength;
+
+	UPROPERTY(Category="Camera", VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	float CameraInterpSpeed;
+
+	UPROPERTY(Category="Camera", VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	float AimOffset;
+	
+	UPROPERTY(Category="Camera", VisibleAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	float FreeOffset;
+	
+	
+#pragma endregion
 };
